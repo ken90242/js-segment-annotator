@@ -103,6 +103,17 @@
 .edit-sidebar-button:hover {
   background-color: #aaa;
 }
+.edit-sidebar-button-disabled {
+  position: relative;
+  background-color: #eee;
+  cursor: auto;
+  padding-left: 2px;
+  text-decoration: line-through;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
 .edit-sidebar-button-selected,
 .edit-sidebar-button-enabled {
   background-color: #ccc;
@@ -159,6 +170,7 @@
 .edit-image-top-menu {
   height: 1em;
   font-family: monospace;
+  padding-bottom:10px
 }
 .edit-image-top-menu-item {
   display: inline-block;

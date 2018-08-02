@@ -103,7 +103,7 @@ define(['../image/layer'], function (Layer) {
 
     overlayAnnotated.classList.add("segment-viewer-overlay-container-annotated");
 
-    overlayAnnotated.appendChild(document.createTextNode("Annotated file found"));
+    overlayAnnotated.appendChild(document.createTextNode("已标记"));
 
     this.container.appendChild(overlayAnnotated);
   };

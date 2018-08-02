@@ -17,7 +17,7 @@ define(['../image/layer',
       idBlock.className = "edit-top-menu-block";
       idBlock.appendChild(
         document.createTextNode(" ID = " + params.id));
-      var warnText = "# Tag at least 2 person (or just skip) # An object for one person # Ignore background";
+      var warnText = "#先点person标籤再选创建物件  #若此图少于两个人则不用標記 #每个标记的人都是独立的物件 #不用管background标籤";
       warnBlock.appendChild(
         document.createTextNode(warnText));
       //warnBlock.appendChild(
@@ -34,9 +34,9 @@ define(['../image/layer',
       var id = parseInt(params.id, 10),
         container = document.createElement("div"),
         indexAnchor = document.createElement("a"),
-        indexAnchorText = document.createTextNode("Index"),
-        prevAnchorText = document.createTextNode("Prev"),
-        nextAnchorText = document.createTextNode("Next"),
+        indexAnchorText = document.createTextNode("图片列表"),
+        prevAnchorText = document.createTextNode("前一张"),
+        nextAnchorText = document.createTextNode("下一张"),
         prevAnchor, nextAnchor;
       indexAnchor.href = util.makeQueryParams({ view: "index" }); // link the index text to the main page containing the indexed list of images
       indexAnchor.appendChild(indexAnchorText);
@@ -137,7 +137,7 @@ define(['../image/layer',
       zoomOutButton.addEventListener("click", function () {
         annotator.zoomOut();
       });
-      zoomInButton.appendChild(document.createTextNode("zoom +"));
+      zoomInButton.appendChild(document.createTextNode("图片大小 +"));
       zoomInButton.classList.add("edit-image-top-button");
       zoomInButton.addEventListener("click", function () {
         annotator.zoomIn();
@@ -148,7 +148,7 @@ define(['../image/layer',
       // Button to show the superpixel segments
       boundaryButton.id = "boundary-button";
       boundaryButton.className = "edit-image-top-button";
-      boundaryButton.appendChild(document.createTextNode("superpixel"));
+      boundaryButton.appendChild(document.createTextNode("涂抹范围"));
       boundaryButton.addEventListener("click", function () {
         if (boundaryFlashTimeoutID)
           window.clearTimeout(boundaryFlashTimeoutID);
@@ -183,7 +183,7 @@ define(['../image/layer',
       });
       imageButton.className = "edit-image-top-button " +
         "edit-image-top-button-enabled";
-      imageButton.appendChild(document.createTextNode("lightness"));
+      imageButton.appendChild(document.createTextNode("图片透明度"));
       imageButton.addEventListener("click", function () {
         if (imageButton.classList.contains("edit-image-top-button-enabled"))
           annotator.hide("image");
@@ -202,7 +202,7 @@ define(['../image/layer',
       // Button to show the superpixel segments
       objectVisualizationButton.id = "objectVisualization-button";
       objectVisualizationButton.className = "edit-image-top-button objectVisualization";
-      objectVisualizationButton.appendChild(document.createTextNode("Objects"));
+      objectVisualizationButton.appendChild(document.createTextNode("识别物件模式(不可编辑)"));
       objectVisualizationButton.addEventListener("click", function () {
         objectVisualizationButton.classList.toggle("edit-image-top-button-enabled");
         if (objectVisualizationButton.classList.contains("edit-image-top-button-enabled")) {
@@ -287,7 +287,7 @@ define(['../image/layer',
 
       // Create the export button
       exportButton.type = "submit";
-      exportButton.value = "export";
+      exportButton.value = "输出标记图片";
       exportButton.className = "edit-sidebar-submit";
       exportButton.addEventListener("click", function () {
         //Save image
@@ -335,12 +335,12 @@ define(['../image/layer',
 
       // Define the undoo button
       undoButton.className = "edit-sidebar-button";
-      undoButton.appendChild(document.createTextNode("undo"));
+      undoButton.appendChild(document.createTextNode("撤销(上一步骤)"));
       undoButton.addEventListener("click", function () { annotator.undo(); });
 
       //Define the redo button
       redoButton.className = "edit-sidebar-button";
-      redoButton.appendChild(document.createTextNode("redo"));
+      redoButton.appendChild(document.createTextNode("恢复(下一步骤)"));
       redoButton.addEventListener("click", function () { annotator.redo(); });
 
       spacer2.className = "edit-sidebar-spacer";
@@ -352,19 +352,19 @@ define(['../image/layer',
 
       // Define the new object button
       newObjectButton.className = "edit-sidebar-button";
-      newObjectButton.appendChild(document.createTextNode("new object"));
+      newObjectButton.appendChild(document.createTextNode("创建物件"));
       newObjectButton.addEventListener("click", function () { annotator.createNewObject(); });
 
       // Define the new object button
       deleteObjectButton.className = "edit-sidebar-button";
-      deleteObjectButton.appendChild(document.createTextNode("delete object"));
-      deleteObjectButton.addEventListener("click", function () { annotator.deleteObject(); });
+      deleteObjectButton.appendChild(document.createTextNode("移除选择物件"));
+      deleteObjectButton.addEventListener("click", function () { annotatr.deleteObject(); });
 
       // Define the superpixel button
       superpixelToolButton.className = "edit-sidebar-button";
       superpixelToolButton.classList.add("superpixel-tool");
       superpixelToolButton.appendChild(
-        document.createTextNode("Superpixel tool"));
+        document.createTextNode("涂抹工具(需有物件)"));
       superpixelToolButton.addEventListener("click", function () {
         polygonToolButton.classList.remove("edit-sidebar-button-selected");
         brushToolButton.classList.remove("edit-sidebar-button-selected");
@@ -375,15 +375,15 @@ define(['../image/layer',
       superpixelToolButton.classList.add("edit-sidebar-button-selected");
 
       // Polygon button
-      polygonToolButton.className = "edit-sidebar-button";
+      polygonToolButton.className = "edit-sidebar-button-disabled";
       polygonToolButton.classList.add("polygon-tool");
-      polygonToolButton.appendChild(document.createTextNode("Polygon tool"));
-      polygonToolButton.addEventListener("click", function () {
+      polygonToolButton.appendChild(document.createTextNode("线条工具(闭锁图形标记)"));
+      /*polygonToolButton.addEventListener("click", function () {
         superpixelToolButton.classList.remove("edit-sidebar-button-selected");
         brushToolButton.classList.remove("edit-sidebar-button-selected");
         polygonToolButton.classList.add("edit-sidebar-button-selected");
         annotator._setMode("polygon");
-      });
+      });*/
 
       // Brush tool button
       brushToolButton.classList.add("edit-sidebar-button-selected");
@@ -400,30 +400,28 @@ define(['../image/layer',
       spacer3.className = "edit-sidebar-spacer";
 
       // A paragraph that explains how to use each tool
-      manualParagraph.appendChild(document.createTextNode("ctrl: toggle mode"));
+      manualParagraph.appendChild(document.createTextNode("crtl键: 拖曳模式"));
       manualParagraph.appendChild(document.createElement("br"));
       manualParagraph.appendChild(document.createElement("br"));
-      manualParagraph.appendChild(document.createTextNode("+Superpixel tool:"));
+      manualParagraph.appendChild(document.createTextNode("+涂抹工具+"));
       manualParagraph.appendChild(document.createElement("br"));
-      manualParagraph.appendChild(document.createTextNode("left: mark"));
+      manualParagraph.appendChild(document.createTextNode("左键: 涂抹"));
       manualParagraph.appendChild(document.createElement("br"));
-      manualParagraph.appendChild(document.createTextNode("right: erase"));
-      manualParagraph.appendChild(document.createElement("br"));
-      manualParagraph.appendChild(document.createElement("br"));
-      manualParagraph.appendChild(document.createTextNode("+Polygon tool:"));
-      manualParagraph.appendChild(document.createElement("br"));
-      manualParagraph.appendChild(document.createTextNode("left: mark area"));
-      manualParagraph.appendChild(document.createElement("br"));
-      manualParagraph.appendChild(document.createTextNode("right: erase area"));
+      manualParagraph.appendChild(document.createTextNode("右键: 消去"));
       manualParagraph.appendChild(document.createElement("br"));
       manualParagraph.appendChild(document.createElement("br"));
-      manualParagraph.appendChild(document.createTextNode("Objects"));
+      manualParagraph.appendChild(document.createTextNode("+线条工具+"));
       manualParagraph.appendChild(document.createElement("br"));
-      manualParagraph.appendChild(document.createTextNode("space: new object"));
+      manualParagraph.appendChild(document.createTextNode("左键: 标记"));
       manualParagraph.appendChild(document.createElement("br"));
-      manualParagraph.appendChild(document.createTextNode("delete: deletes"));
+      manualParagraph.appendChild(document.createTextNode("右键: 消去"));
       manualParagraph.appendChild(document.createElement("br"));
-      manualParagraph.appendChild(document.createTextNode("object"));
+      manualParagraph.appendChild(document.createElement("br"));
+      manualParagraph.appendChild(document.createTextNode("+物件+"));
+      manualParagraph.appendChild(document.createElement("br"));
+      manualParagraph.appendChild(document.createTextNode("空白键: 创建物件"));
+      manualParagraph.appendChild(document.createElement("br"));
+      manualParagraph.appendChild(document.createTextNode("delete键: 移除物件"));
 
 
       spacer4.className = "edit-sidebar-spacer";
