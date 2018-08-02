@@ -12,12 +12,20 @@ define(['../image/layer',
     function createNavigationMenu(params, data, annotator) {
       var navigationMenu = document.createElement("p"),
         navigation = createNavigation(params, data),
-        idBlock = document.createElement("div");
+        idBlock = document.createElement("div"),
+        warnBlock = document.createElement("div");
       idBlock.className = "edit-top-menu-block";
       idBlock.appendChild(
         document.createTextNode(" ID = " + params.id));
+      var warnText = "# Tag at least 2 person (or just skip) # An object for one person # Ignore background";
+      warnBlock.appendChild(
+        document.createTextNode(warnText));
+      //warnBlock.appendChild(
+      //  document.createElement('br')
+      warnBlock.style='color:red;background:yellow'
       navigationMenu.appendChild(navigation);
       navigationMenu.appendChild(idBlock);
+      navigationMenu.appendChild(warnBlock);
       return navigationMenu;
     }
 
@@ -140,7 +148,7 @@ define(['../image/layer',
       // Button to show the superpixel segments
       boundaryButton.id = "boundary-button";
       boundaryButton.className = "edit-image-top-button";
-      boundaryButton.appendChild(document.createTextNode("boundary"));
+      boundaryButton.appendChild(document.createTextNode("superpixel"));
       boundaryButton.addEventListener("click", function () {
         if (boundaryFlashTimeoutID)
           window.clearTimeout(boundaryFlashTimeoutID);
@@ -175,7 +183,7 @@ define(['../image/layer',
       });
       imageButton.className = "edit-image-top-button " +
         "edit-image-top-button-enabled";
-      imageButton.appendChild(document.createTextNode("image"));
+      imageButton.appendChild(document.createTextNode("lightness"));
       imageButton.addEventListener("click", function () {
         if (imageButton.classList.contains("edit-image-top-button-enabled"))
           annotator.hide("image");

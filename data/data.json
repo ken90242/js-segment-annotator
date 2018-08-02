@@ -1,12 +1,7 @@
 {
   "labels": [
     "background",
-    "skin",
-    "hair",
-    "dress",
-    "glasses",
-    "jacket",
-    "skirt"
+    "person"
   ],
   "imageURLs": [
     "data/images/1.jpg",
